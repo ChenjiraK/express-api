@@ -1,34 +1,33 @@
 import { Request, Response } from 'express';
-import Category from '../models/CategoryModel';
+import User from '../models/UserModel';
 
-export const getAllCategories = async (req: Request, res: Response): Promise<void> => {
+export const getAllUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const category = await Category.findAll();
-        res.status(200).json({ status: 'success', data: category });
+        const users = await User.findAll();
+        res.status(200).json({ status: 'success', data: users });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 };
 
-export const getCategory = async (req: Request, res: Response): Promise<void> => {
+export const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const category = await Category.findByPk(id);
-        res.status(200).json({ status: 'success', data: category });
+        const user = await User.findByPk(id);
+        res.status(200).json({ status: 'success', data: user });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 };
 
-export const createCategory = async (req: Request, res: Response): Promise<void> => {
+export const createUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const requestData = req.body;
         let responseData = null;
-
+        const requestData = await User.getRequestParams(req.body);
         if (Array.isArray(requestData)) { // insert array
-            responseData = await Category.bulkCreate(requestData);
+            responseData = await User.bulkCreate(requestData);
         } else {
-            responseData = await Category.create(req.body)
+            responseData = await User.create(requestData)
         }
 
         res.status(201).json({
@@ -40,39 +39,39 @@ export const createCategory = async (req: Request, res: Response): Promise<void>
     }
 };
 
-export const updateCategory = async (req: Request, res: Response): Promise<void> => {
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const requestData = req.body;
+        const requestData = await User.getRequestParams(req.body);;
     
-        const category = await Category.findByPk(id);
+        const user = await User.findByPk(id);
     
-        if (!category) {
+        if (!user) {
           res.status(404).json({ message: 'data not found' });
           return;
         }
     
         // อัปเดตข้อมูลผู้ใช้
-        await category.update(requestData);
-        res.status(200).json({ message: 'data updated successfully', category });
+        await user.update(requestData);
+        res.status(200).json({ message: 'data updated successfully', requestData });
       } catch (error: any) {
         res.status(500).json({ error: error.message });
       }
 };
 
-export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
     
-        const category = await Category.findByPk(id);
+        const user = await User.findByPk(id);
     
-        if (!category) {
+        if (!user) {
           res.status(404).json({ message: 'data not found' });
           return;
         }
     
         // ลบข้อมูลผู้ใช้
-        await category.destroy();
+        await user.destroy();
         res.status(200).json({ message: 'data deleted successfully' });
       } catch (error: any) {
         res.status(500).json({ error: error.message });

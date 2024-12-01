@@ -1,9 +1,23 @@
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE `badges` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `badge_label` varchar(255) DEFAULT NULL,
   `badge_color` varchar(255) DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -11,8 +25,8 @@ CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `min_price` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -21,8 +35,8 @@ CREATE TABLE `sub_categories` (
   `cat_id` bigint(20) unsigned DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `min_price` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -33,8 +47,8 @@ CREATE TABLE `products` (
   `name` varchar(255) DEFAULT NOT NULL,
   `cat_id` varchar(255) DEFAULT NULL,
   `min_price` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -44,8 +58,8 @@ CREATE TABLE `images` (
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `cat_id` bigint(20) unsigned DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -57,7 +71,7 @@ CREATE TABLE `banners` (
   `router_page` bigint(20) unsigned DEFAULT NULL,
   `button_text` bigint(20) unsigned DEFAULT NULL,
   `cat_id` bigint(20) unsigned DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `updatedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` datetime NULL DEFAULT NULL,
+  `updatedAt` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

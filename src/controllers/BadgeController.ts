@@ -22,11 +22,11 @@ export const getBadge = async (req: Request, res: Response): Promise<void> => {
 
 export const createBadge = async (req: Request, res: Response): Promise<void> => {
     try {
-        const badgeRequest = req.body;
+        const requestData = req.body;
         let responseData = null;
 
-        if (Array.isArray(badgeRequest)) { // insert array
-            responseData = await Badge.bulkCreate(badgeRequest);
+        if (Array.isArray(requestData)) { // insert array
+            responseData = await Badge.bulkCreate(requestData);
         } else {
             responseData = await Badge.create(req.body)
         }
