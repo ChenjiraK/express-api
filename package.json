@@ -1,0 +1,29 @@
+{
+  "name": "expree-api",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "sequelize": "^6.37.5",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "nodemon": "^2.0.13",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
