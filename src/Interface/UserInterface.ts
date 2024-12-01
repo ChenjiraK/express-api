@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
 export interface IUserParams {
     username: string,
     password: string,

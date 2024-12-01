@@ -6,8 +6,8 @@ import { hashPassword } from '../utility/Auth';
 
 class User extends Model {
     public id!: number;
-    public username!: string | null;
-    public password!: string | null;
+    public username!: string;
+    public password!: string;
     public first_name!: string | null;
     public last_name!: string | null;
     public email!: string | null;
@@ -21,7 +21,7 @@ class User extends Model {
             password: encodePassword,
             first_name: data.first_name,
             last_name: data.last_name,
-            email: data.email,
+            email: data.email ? data.email.toLocaleLowerCase() : null,
             phone_number: data.phone_number,
             birth_date: moment(data.birth_date).local().format('YYYY-MM-DD'),
         }
@@ -33,10 +33,12 @@ User.init(
     username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'password'
     },
     first_name: {
         type: DataTypes.STRING,
@@ -49,6 +51,7 @@ User.init(
     email: {
         type: DataTypes.STRING,
         allowNull: true,
+        unique: true,
     },
     phone_number: {
         type: DataTypes.STRING,

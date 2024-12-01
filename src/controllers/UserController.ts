@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/UserModel';
+import { checkUserExists } from '../utility/Auth';
 
 export const getAllUser = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -24,6 +25,14 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     try {
         let responseData = null;
         const requestData = await User.getRequestParams(req.body);
+        const existData = await checkUserExists(null, requestData.username, requestData.email);
+        if(existData) {
+            res.status(400).json({
+                message: existData,
+            });
+            return;
+        }
+
         if (Array.isArray(requestData)) { // insert array
             responseData = await User.bulkCreate(requestData);
         } else {
@@ -50,7 +59,15 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
           res.status(404).json({ message: 'data not found' });
           return;
         }
-    
+        // validate duplicate data
+        const existData = await checkUserExists(id, requestData.username, requestData.email);
+        if(existData) {
+            res.status(400).json({
+                message: existData,
+            });
+            return;
+        }
+
         // อัปเดตข้อมูลผู้ใช้
         await user.update(requestData);
         res.status(200).json({ message: 'data updated successfully', requestData });
