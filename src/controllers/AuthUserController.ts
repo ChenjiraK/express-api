@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { comparePassword } from '../utility/Auth';
+import { comparePassword, checkUserExists } from '../utility/Auth';
 import User from '../models/UserModel';
 import { isEmpty } from '../utility/Util';
-import { checkUserExists } from '../utility/Auth';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -27,7 +28,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const token = jwt.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET as string,
-            { expiresIn: '2h' }
+            { expiresIn: '5h' } //expiresIn?: string | number;
         );
   
         res.status(200).json({ message: 'Login successful', token });
@@ -63,9 +64,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     try {
         let responseData = null;
         const requestData = await User.getRequestParams(req.body);
+        console.log('requestData', requestData);
         const existData = await checkUserExists(null, requestData.username, requestData.email);
         if(existData) {
-            res.status(400).json({
+            res.status(409).json({
                 message: existData,
             });
             return;

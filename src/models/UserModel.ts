@@ -19,11 +19,11 @@ class User extends Model {
         return {
             username: data.username,
             password: encodePassword,
-            first_name: data.first_name,
-            last_name: data.last_name,
+            first_name: data.first_name ?? null,
+            last_name: data.last_name ?? null,
             email: data.email ? data.email.toLocaleLowerCase() : null,
-            phone_number: data.phone_number,
-            birth_date: moment(data.birth_date).local().format('YYYY-MM-DD'),
+            phone_number: data.phone_number ?? null,
+            birth_date: data.birth_date ? moment(data.birth_date).local().format('YYYY-MM-DD') : null,
         }
     }
 };
