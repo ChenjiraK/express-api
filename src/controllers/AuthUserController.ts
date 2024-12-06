@@ -8,14 +8,14 @@ dotenv.config();
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
   
         const user = await User.findOne({
-            where: { username },
+            where: { email },
             raw: true, //access to dataValues object of users
         });
         if (!user) {
-            res.status(404).json({ message: 'username or password incorrect' });
+            res.status(404).json({ message: 'email or password incorrect' });
             return;
         }
         const isPasswordValid = await comparePassword(password, user.password);

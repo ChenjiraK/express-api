@@ -46,7 +46,7 @@ const mockUser = {
 describe('login', async () => {
     const authUtil = await import('../utility/Auth');
     it('should return status 200 if login successfully', async () => {
-        const req = { body: { username: 'testUser',password: 'testPassword' }} as Request;
+        const req = { body: { email: 'test@example.com',password: 'testPassword' }} as Request;
         const findOneSpy = vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any); // get data success
         const comparePasswordSpy = vi.spyOn(authUtil, 'comparePassword').mockResolvedValue(true);
         const signSpy = vi.spyOn(jwt, 'sign').mockReturnValue(mockToken as any);
@@ -56,7 +56,7 @@ describe('login', async () => {
     
         // Assert
         expect(findOneSpy).toHaveBeenCalledWith({
-            where: { username: 'testUser' },
+            where: { email: 'test@example.com' },
             raw: true,
         });
         expect(comparePasswordSpy).toHaveBeenCalledWith(req.body.password, mockUser.password);
@@ -73,7 +73,7 @@ describe('login', async () => {
     });
 
     it('should return status 404 if user not found', async () => {
-        const req = { body: { username: 'nonExistingUser',password: 'testPassword' }} as Request;
+        const req = { body: { email: 'nonExistingUser@email.com',password: 'testPassword' }} as Request;
         const findOneSpy = vi.spyOn(User, 'findOne').mockResolvedValue(null); // get data is null
 
         // Act
@@ -81,7 +81,7 @@ describe('login', async () => {
     
         // Assert
         expect(findOneSpy).toHaveBeenCalledWith({
-            where: { username: 'nonExistingUser' },
+            where: { email: req.body.email },
             raw: true,
         });
         expect(res.status).toHaveBeenCalledWith(404);
@@ -94,7 +94,7 @@ describe('login', async () => {
     });
 
     it('should return status 401 if password is incorrect', async () => {
-        const req = { body: { username: 'testUser', password: 'wrongPassword' } } as any;
+        const req = { body: { email: 'test@example.com', password: 'wrongPassword' } } as any;
     
         const findOneSpy = vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
         const comparePasswordSpy = vi.spyOn(authUtil, 'comparePassword').mockResolvedValue(false); // return password not match
@@ -104,7 +104,7 @@ describe('login', async () => {
     
         // Assert
         expect(findOneSpy).toHaveBeenCalledWith({
-          where: { username: 'testUser' },
+          where: { email: req.body.email },
           raw: true,
         });
         expect(comparePasswordSpy).toHaveBeenCalledWith(req.body.password, mockUser.password);
