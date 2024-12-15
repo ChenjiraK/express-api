@@ -18,7 +18,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       res.status(404).json({ message: 'email or password incorrect' });
       return;
     }
-    const isPasswordValid = await comparePassword(password, user.password);
+    let isPasswordValid = false;
+    if (user.password) {
+      isPasswordValid = await comparePassword(password, user.password);
+    }
     if (!isPasswordValid) {
       res.status(401).json({ message: 'password incorrect' });
       return;

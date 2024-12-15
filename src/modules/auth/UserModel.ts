@@ -3,11 +3,12 @@ import moment from 'moment';
 import sequelize from '../../database/db';
 import { IUserParams } from './AuthInterface';
 import { hashPassword } from '../../utility/Auth';
+import { cleanObjectEmptyStr } from '../../utility/Util';
 
 class User extends Model {
   public id!: number;
-  public username!: string;
-  public password!: string;
+  public username!: string | null;
+  public password!: string | null;
   public first_name!: string | null;
   public last_name!: string | null;
   public email!: string | null;
@@ -18,17 +19,18 @@ class User extends Model {
     const encodePassword = data.password
       ? await hashPassword(data.password)
       : null;
-    return {
+    let param = {
       username: data.username ?? null,
       password: encodePassword,
       first_name: data.first_name ?? null,
       last_name: data.last_name ?? null,
-      email: data.email ? data.email.toLocaleLowerCase() : null,
+      email: data.email.toLocaleLowerCase(),
       phone_number: data.phone_number ?? null,
       birth_date: data.birth_date
         ? moment(data.birth_date).local().format('YYYY-MM-DD')
         : null,
     };
+    return cleanObjectEmptyStr(param);
   }
 }
 
