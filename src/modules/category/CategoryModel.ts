@@ -1,11 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../database/db';
+import sequelize from '../../database/db';
 
 class Category extends Model {
-    public id!: number;
-    public name!: string | null;
-    public min_price!: number | null;
-};
+  public id!: number;
+  public name!: string | null;
+  public min_price!: number | null;
+}
 
 Category.init(
   {

@@ -1,11 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../database/db';
+import sequelize from '../../database/db';
 
 class Badge extends Model {
-    public id!: number;
-    public badge_label!: string | null;
-    public badge_color!: string | null;
-};
+  public id!: number;
+  public badge_label!: string | null;
+  public badge_color!: string | null;
+}
 
 Badge.init(
   {

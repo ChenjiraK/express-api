@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import BadgeApi from './BadgeApi';
-import CategoryApi from './CategoryApi';
-import UserApi from './UserApi';
-import AuthApi from './AuthApi';
+import BadgeApi from '../modules/badge/BadgeApi';
+import CategoryApi from '../modules/category/CategoryApi';
+import UserApi from '../modules/auth/UserApi';
+import AuthApi from '../modules/auth/AuthApi';
 const routes = Router();
 
 routes.use('/badge', BadgeApi);

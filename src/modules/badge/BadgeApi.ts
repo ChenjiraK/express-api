@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { 
-    getAllBadges, 
-    createBadge, 
-    updateBadge, 
-    deleteBadge 
-} from '../controllers/BadgeController';
+import {
+  getAllBadges,
+  createBadge,
+  updateBadge,
+  deleteBadge,
+} from './BadgeController';
 
 const router = Router();
 
