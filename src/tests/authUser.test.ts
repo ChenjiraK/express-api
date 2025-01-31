@@ -2,7 +2,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { Request, Response } from 'express';
 import { login, register, getProfile } from '../modules/auth/AuthController';
-import User from '../modules/auth/UserModel';
+import User from '../modules/auth/AuthModel';
 import { hashPassword } from '../utility/Auth';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';

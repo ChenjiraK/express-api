@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { Op } from 'sequelize';
-import User from '../modules/auth/UserModel';
+import User from '../modules/auth/AuthModel';
 
 export const hashPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(10); // สร้าง Salt

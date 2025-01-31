@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 // อนุญาตเฉพาะ Origin
 app.use(cors({
-  origin: 'http://localhost:3000', // ระบุ Origin ที่อนุญาต
+  origin: ['http://localhost:3000', 'http://localhost:8080'], // ระบุ Origin ที่อนุญาต
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // ระบุ HTTP methods ที่อนุญาต
   credentials: true, // หากมีการส่ง cookie หรือ credential
 }));

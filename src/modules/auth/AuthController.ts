@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { comparePassword, checkUserExists } from '../../utility/Auth';
 import { isEmpty } from '../../utility/Util';
-import User from './UserModel';
+import User from './AuthModel';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -41,9 +41,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const register = async (req: Request, res: Response): Promise<void> => {
-  try {
-    let responseData = null;
-    const requestData = await User.getRequestParams(req.body);
+  let responseData = null;
+    const requestData = await User.getUserParams(req.body);
     const existData = await checkUserExists(
       null,
       requestData.username,
@@ -55,6 +54,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       });
       return;
     }
+  try {
     responseData = await User.create(requestData);
 
     res.status(201).json({
@@ -105,7 +105,7 @@ export const updateProfile = async (
 ): Promise<void> => {
   try {
     const userId = (req as any).user?.id ?? null; // ดึง User ID จาก Token
-    const requestData = await User.getRequestParams(req.body);
+    const requestData = await User.getUserParams(req.body);
     const user = await User.findByPk(userId);
     if (!user) {
       res.status(404).json({ message: 'profile not found' });

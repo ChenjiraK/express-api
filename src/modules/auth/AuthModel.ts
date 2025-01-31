@@ -1,36 +1,60 @@
 import { DataTypes, Model } from 'sequelize';
 import moment from 'moment';
 import sequelize from '../../database/db';
-import { IUserParams } from './AuthInterface';
+import { IProfileParams } from './AuthInterface';
 import { hashPassword } from '../../utility/Auth';
 import { cleanObjectEmptyStr } from '../../utility/Util';
 
 class User extends Model {
-  public id!: number;
-  public username!: string | null;
-  public password!: string | null;
-  public first_name!: string | null;
-  public last_name!: string | null;
-  public email!: string | null;
-  public phone_number!: string | null;
-  public birth_date!: string | null;
+  id!: number;
+  firstname!: string;
+  lastname!: string;
+  email!: string;
+  password!: string | null;
+  image_url!: string | null;
+  birth_date!: string | Date | null;
+  gender!: string | null;
+  phone!: string | null;
+  is_accept_terms!: boolean;
+  is_accept_privacy!: boolean;
+  is_accept_marketing!: boolean;
 
-  static async getRequestParams(data: IUserParams) {
+  static async getUserParams(data: any) {
     const encodePassword = data.password
       ? await hashPassword(data.password)
       : null;
     let param = {
-      username: data.username ?? null,
-      password: encodePassword,
-      first_name: data.first_name ?? null,
-      last_name: data.last_name ?? null,
+      firstname: data.firstname,
+      lastname: data.lastname,
       email: data.email.toLocaleLowerCase(),
-      phone_number: data.phone_number ?? null,
+      password: encodePassword,
+      phone: data.phone ?? null,
+      image_url: data.image_url ?? null,
+      gender: data.gender ?? null,
+      is_accept_terms: data.is_accept_terms ?? false,
+      is_accept_privacy: data.is_accept_privacy ?? false,
+      is_accept_marketing: data.is_accept_marketing ?? false,
       birth_date: data.birth_date
         ? moment(data.birth_date).local().format('YYYY-MM-DD')
         : null,
-    };
+    } as IProfileParams;
     return cleanObjectEmptyStr(param);
+  }
+
+  static registerValidate(data: any){
+    if(data.firstname) {
+      return 'firstname is require field'
+    }
+    if(data.lastname) {
+      return 'lastname is require field'
+    }
+    if(data.email) {
+      return 'email is require field'
+    }
+    if(data.password) {
+      return 'password is require field'
+    }
+    return null;
   }
 }
 
